@@ -58,7 +58,7 @@ npm run dev
 
 ## 🌈 **Tech Stack**
 
-* **Framework:** Next.js (App Router)
+* **Framework:** Next.js 14(App Router)
 * **Styling:** Tailwind CSS + Tailwind Animations
 * **State Management:** Context API
 * **Forms & Validation:** `react-hook-form` + `zod`
