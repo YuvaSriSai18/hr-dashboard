@@ -63,7 +63,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   
   // If loading auth state, show a global loader or skeleton
   // Only render children if not on login page OR if authenticated
-  const canRenderChildren = pathname === '/login' || isAuthenticated;
+  // const canRenderChildren = pathname === '/login' || isAuthenticated;
 
   if (isLoading && pathname !== '/login' ) {
      return (

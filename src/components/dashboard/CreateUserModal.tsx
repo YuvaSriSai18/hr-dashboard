@@ -1,20 +1,31 @@
-
 "use client";
 
 import { useState } from 'react';
-import { useForm, type SubmitHandler } from 'react-hook-form';
+import { useForm, type SubmitHandler, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { Button } from '@/components/ui/button';
 import {
-  Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogClose
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogClose
 } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue
+} from '@/components/ui/select';
 import { useApp } from '@/contexts/AppContext';
 import type { User, Department } from '@/types';
-import { departments } from '@/types'; // Corrected import
+import { departments } from '@/types';
 import { transformDummyUserToUser } from '@/lib/utils';
 import { useToast } from '@/hooks/use-toast';
 import { Loader2 } from 'lucide-react';
@@ -24,7 +35,9 @@ const userSchema = z.object({
   lastName: z.string().min(2, { message: "Last name must be at least 2 characters." }),
   email: z.string().email({ message: "Invalid email address." }),
   age: z.coerce.number().min(18, { message: "Age must be at least 18." }).max(100),
-  department: z.enum(departments as [Department, ...Department[]], { message: "Please select a department." }),
+  department: z.enum(departments as [Department, ...Department[]], {
+    message: "Please select a department.",
+  }),
   title: z.string().min(2, { message: "Job title must be at least 2 characters." }),
 });
 
@@ -40,16 +53,24 @@ export function CreateUserModal({ isOpen, onOpenChange }: CreateUserModalProps) 
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const { register, handleSubmit, reset, control, formState: { errors } } = useForm<UserFormData>({
+  const {
+    register,
+    handleSubmit,
+    reset,
+    control,
+    formState: { errors },
+  } = useForm<UserFormData>({
     resolver: zodResolver(userSchema),
   });
 
   const onSubmit: SubmitHandler<UserFormData> = async (data) => {
     setIsSubmitting(true);
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    await new Promise((resolve) => setTimeout(resolve, 1000));
 
-    const newUserPartial: Partial<User> = {
+    const placeholderId = Date.now();
+
+    const newUser: User = transformDummyUserToUser({
+      id: placeholderId,
       firstName: data.firstName,
       lastName: data.lastName,
       email: data.email,
@@ -57,40 +78,42 @@ export function CreateUserModal({ isOpen, onOpenChange }: CreateUserModalProps) 
       company: {
         department: data.department,
         title: data.title,
-        name: "HR Glimpse Corp" // Default company name
+        name: "HR Glimpse Corp",
       },
-      // Use dummy values for fields not in form for now
       image: `https://placehold.co/128x128.png?text=${data.firstName[0]}${data.lastName[0]}`,
       username: `${data.firstName.toLowerCase()}${data.lastName.toLowerCase()}`,
-      address: { address: '123 Main St', city: 'Anytown', state: 'CA', postalCode: '90210', country: 'USA' },
+      address: {
+        address: '123 Main St',
+        city: 'Anytown',
+        state: 'CA',
+        postalCode: '90210',
+        country: 'USA',
+      },
       phone: '555-1234',
-    };
-    
-    // Use transformDummyUserToUser to fill in other details for a complete User object
-    // This is a bit of a hack for this mock scenario.
-    // Ideally, the backend would handle creating the full user object.
-    const placeholderId = Date.now(); // Temporary ID, AppContext will assign final
-    const transformedNewUser = transformDummyUserToUser({ ...newUserPartial, id: placeholderId, company: newUserPartial.company });
-    
-    addUser({ ...transformedNewUser, ...newUserPartial }); // Ensure form data overrides transformed data
+    });
+
+    addUser(newUser);
 
     toast({
       title: "User Created",
       description: `${data.firstName} ${data.lastName} has been added to the system.`,
     });
+
     reset();
     onOpenChange(false);
     setIsSubmitting(false);
   };
 
   return (
-    <Dialog open={isOpen} onOpenChange={(open) => {
-      onOpenChange(open);
-      if (!open) {
-        reset(); // Reset form when closing
-        setError(null); // Clear any previous errors
-      }
-    }}>
+    <Dialog
+      open={isOpen}
+      onOpenChange={(open) => {
+        onOpenChange(open);
+        if (!open) {
+          reset();
+        }
+      }}
+    >
       <DialogContent className="sm:max-w-[525px]">
         <DialogHeader>
           <DialogTitle>Create New Employee</DialogTitle>
@@ -130,7 +153,7 @@ export function CreateUserModal({ isOpen, onOpenChange }: CreateUserModalProps) 
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="department" className="text-right">Department</Label>
             <div className="col-span-3">
-               <Controller
+              <Controller
                 control={control}
                 name="department"
                 render={({ field }) => (
@@ -139,7 +162,7 @@ export function CreateUserModal({ isOpen, onOpenChange }: CreateUserModalProps) 
                       <SelectValue placeholder="Select department" />
                     </SelectTrigger>
                     <SelectContent>
-                      {departments.map(dept => (
+                      {departments.map((dept) => (
                         <SelectItem key={dept} value={dept}>{dept}</SelectItem>
                       ))}
                     </SelectContent>
@@ -156,24 +179,17 @@ export function CreateUserModal({ isOpen, onOpenChange }: CreateUserModalProps) 
               {errors.title && <p className="text-xs text-destructive mt-1">{errors.title.message}</p>}
             </div>
           </div>
-        <DialogFooter>
+          <DialogFooter>
             <DialogClose asChild>
-                <Button type="button" variant="outline" onClick={() => onOpenChange(false)}>Cancel</Button>
+              <Button type="button" variant="outline" onClick={() => onOpenChange(false)}>Cancel</Button>
             </DialogClose>
             <Button type="submit" disabled={isSubmitting}>
               {isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
               Create Employee
             </Button>
-        </DialogFooter>
+          </DialogFooter>
         </form>
       </DialogContent>
     </Dialog>
   );
 }
-// Helper to clear errors on the form, not directly used here but useful if needed
-function setError(arg0: null) {
-    // This function is a placeholder, actual error setting is handled by react-hook-form
-}
-
-// Controller import (already in react-hook-form)
-import { Controller } from 'react-hook-form';

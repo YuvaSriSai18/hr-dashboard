@@ -6,7 +6,7 @@ import React, { createContext, useContext, useState, useEffect, useMemo, useCall
 import type { User, Department, DummyUser } from '@/types';
 import { transformDummyUserToUser } from '@/lib/utils'; // Removed getRandomDepartment as it's not used here directly
 
-type Theme = 'light' | 'dark' | 'system';
+// type Theme = 'light' | 'dark' | 'system';
 
 interface AppContextType {
   users: User[];
@@ -98,7 +98,7 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
 
   const addBookmark = (userId: number) => {
     setBookmarks(prev => {
-      const newBookmarks = [...new Set([...prev, userId])];
+      const newBookmarks = prev.includes(userId) ? prev : [...prev, userId];
       localStorage.setItem('hrGlimpseBookmarks', JSON.stringify(newBookmarks));
       return newBookmarks;
     });

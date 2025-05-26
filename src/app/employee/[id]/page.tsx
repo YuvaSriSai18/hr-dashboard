@@ -15,7 +15,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { Star, MapPin, Phone, Briefcase, Edit3, Send, MessageSquare, UserCircle, Brain } from 'lucide-react';
+import { Star, MapPin, Phone, Briefcase, Send, UserCircle, Brain } from 'lucide-react';
 import { getInitials, getPerformanceBadgeColor, getPerformanceText } from '@/lib/utils';
 import Image from 'next/image';
 import { Textarea } from '@/components/ui/textarea';
