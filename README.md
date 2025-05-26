@@ -1,36 +1,114 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 💼 HR Dashboard – Submission
 
-## Getting Started
+## 🔗 **GitHub Repository**
 
-First, run the development server:
+- **GitHub repository link** - [https://github.com/YuvaSriSai18/hr-dashboard](https://github.com/YuvaSriSai18/hr-dashboard)
+
+- **Deployed Link** - [https://hr-dashboard-steel.vercel.app/](https://hr-dashboard-steel.vercel.app/)
+---
+
+## 🚀 **Project Setup & Running**
+
+### 🛠️ Installation
 
 ```bash
+git clone https://github.com/YuvaSriSai18/hr-dashboard.git
+cd hr-dashboard
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## ✅ **Features Implemented**
 
-## Learn More
+### 1. 🏠 **Dashboard Homepage (`/`)**
 
-To learn more about Next.js, take a look at the following resources:
+* ✅ User cards fetched from `https://dummyjson.com/users?limit=20`
+* ✅ Rendered full name, email, age, department (mocked via logic)
+* ✅ Performance rating bar (1–5 stars)
+* ✅ Actions: `View`, `Bookmark`, `Promote` (UI)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### 2. 🔍 **Search & Filter**
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+* ✅ Search by name, email, department (case-insensitive)
+* ✅ Multi-select filters for department & performance rating
 
-## Deploy on Vercel
+### 3. 👤 **Dynamic User Details Page (`/employee/[id]`)**
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+* ✅ Tabs: `Overview`, `Projects`, `Feedback`
+* ✅ Detailed user info: phone, address, bio, rating
+* ✅ Past performance list (randomized)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### 4. 📌 **Bookmark Manager (`/bookmarks`)**
+
+* ✅ View all bookmarked users
+* ✅ Actions: `Remove`, `Promote`, `Assign to Project` (UI only)
+
+### 5. 📊 **Analytics Page (`/analytics`)**
+
+* ✅ Charts using `recharts`
+
+  * Department-wise average ratings
+  * Bookmark trends (mocked)
+* ✅ Server-side static generation used (if applicable)
+
+---
+
+## 🌈 **Tech Stack**
+
+* **Framework:** Next.js (App Router)
+* **Styling:** Tailwind CSS + Tailwind Animations
+* **State Management:** Context API
+* **Forms & Validation:** `react-hook-form` + `zod`
+* **Charts:** `recharts`
+* **Dark Mode:** `next-themes`
+* **Icons/UI:** `lucide-react`, `Shadcn`
+
+---
+
+## 💎 **Bonus Features**
+
+* ✅ **Mock Login** page for authentication flow
+* ✅ Create User modal/page (with validation)
+* ✅ Responsive across devices
+* ✅ Accessible components (keyboard navigable)
+* ✅ Paginated user list or Infinite Scroll (if added)
+
+---
+
+## 📂 **Project Structure**
+
+```
+/components      → UI components (Card, Button, Tabs, etc.)
+/hooks           → Custom hooks (useBookmarks, useSearch, etc.)
+/app             → Next.js App Router Pages (/bookmarks, /analytics)
+/lib             → Helper logic, types, and constants
+/public          → Static assets
+```
+
+---
+
+## 📸 **Screenshots**
+
+> ![alt tex](src\assets\1.png)
+---
+> ![alt tex](src\assets\2.png)
+---
+> ![alt tex](src\assets\3.png)
+---
+> ![alt tex](src\assets\4.png)
+---
+> ![alt tex](src\assets\5.png)
+---
+> ![alt tex](src\assets\6.png)
+---
+> ![alt tex](src\assets\7.png)
+---
+> ![alt tex](src\assets\8.png)
+---
+> ![alt tex](src\assets\9.png)
+---
+> ![alt tex](src\assets\10.png)
+---
